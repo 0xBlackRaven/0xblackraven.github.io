@@ -21,10 +21,8 @@ author: BlackRaven
 
 navbar-links:
   About Me: "aboutme"
-  Resources:
-    - Beautiful Jekyll: "https://beautifuljekyll.com"
-    - Learn markdown: "https://www.markdowntutorial.com/"
-  Root-Me: "https://www.root-me.org/BlackRaven-489765"
+  Articles: "index.html"
+  My Root-Me: "https://www.root-me.org/BlackRaven-489765"
 
 ################
 # --- Logo --- #
