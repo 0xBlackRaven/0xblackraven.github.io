@@ -20,9 +20,9 @@ author: BlackRaven
 ###############################################
 
 navbar-links:
+  Home: "index.html"
   About Me: "aboutme"
-  Articles: "index.html"
-  My Root-Me: "https://www.root-me.org/BlackRaven-489765"
+  Twitter: "https://twitter.com/0xBlackRaven"
 
 ################
 # --- Logo --- #
