@@ -3,10 +3,8 @@ layout: page
 title: About me
 ---
 
-Hello ! My name is Adrien, or if you prefer, BlackRaven, and I'm into cybersecurity since 2021.
+Hello everyone! My name is Adrien but people know me for under my nickname "BlackRaven".  I am currently a high school student. I love reverse engineering and networks, but I'm quite curious about everything.
 
-I'm currently learning reverse, but I like everything, except web of course.
+I also really like doing CTFs.  But I also do some on my side on [Root-me](https://www.root-me.org/BlackRaven-489765), [Hack The Box](https://app.hackthebox.com) and [crackmes.one](https://crackmes.one/).
 
-### What will you find here ?
-
-You'll find some writeups here about CTFs. And, of course, some technical articles about vulnerabilities, etc. Feel free to DM !
+If you would like to discuss cybersecurity or any of the articles / writeups that I have written, feel free to DM via Discord or Twitter !
