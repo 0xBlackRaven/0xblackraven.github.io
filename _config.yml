@@ -10,10 +10,10 @@
 ############################
 
 # Name of website
-title: My Website
+title: BlackRaven
 
 # Your name to show in the footer
-author: Some Person
+author: BlackRaven
 
 ###############################################
 # --- List of links in the navigation bar --- #
@@ -77,7 +77,7 @@ social-network-links:
 
 # If you want your website to generate an RSS feed, provide a description
 # The URL for the feed will be https://<your_website>/feed.xml
-rss-description: This website is a virtual proof that I'm awesome
+
 
 ###########################
 # --- General options --- #
