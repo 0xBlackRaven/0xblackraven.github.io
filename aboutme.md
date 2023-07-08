@@ -9,4 +9,4 @@ I'm currently learning reverse, but I like everything, except web of course.
 
 ### What will you find here ?
 
-You'll find some writeups here, about CTFs. I don't have any CTF team right now, so I do challenges alone, but sometimes, this is good :D
+You'll find some writeups here about CTFs. And, of course, some technical articles about vulnerabilities, etc. Feel free to DM !
