@@ -48,7 +48,7 @@ round-avatar: false
 # You can change the order that they show up on the page by changing the order here.
 # Uncomment the links you want to show and add your information to each one.
 social-network-links:
-  email: "blackraven.ctf@gmail.com"
+#  email: "blackraven.ctf@gmail.com"
   github: 0xBlackRaven
   twitter: 0xBlackRaven
 #  medium: yourname
@@ -68,7 +68,7 @@ social-network-links:
 #  mastodon: instance.url/@username
 #  ORCID: your ORCID ID
 #  google-scholar: your google scholar
-#  discord: "invite_code" or "users/userid" or "invite/invite_code" 
+  discord: "realblackraven"
 #  kaggle: yourname
 #  hackerrank: yourname
 #  gitlab: yourname
