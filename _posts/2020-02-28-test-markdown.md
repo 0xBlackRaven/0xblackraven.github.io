@@ -13,7 +13,7 @@ ce challenge, ribt, ainsi qu'à tous les organisateurs et créateurs de challeng
 
 La description du challenge ne nous renseigne pas plus que ça sur ce qui aurait pu se passer, mais on peut supposer que des données ont été exfiltrées. Et que tout ça a été enregistré par une capture réseau.
 Ca tombe bien, on est justement dans la catégorie réseau !
-On télécharge le fichier fourni, sobrement intitulé **capture.pcapng**, et on garde en pcapng parce que c'est next-gen et que notre wireshark peut le lire sans problème.
+On télécharge le fichier fourni, sobrement intitulé **capture.pcapng**, on garde en pcapng parce que c'est next-gen et que notre wireshark peut le lire sans problème.
 
 ![Wireshark_le_goat](https://cdn.discordapp.com/attachments/822188888297963560/1173656631586865243/85vnqb.jpg?ex=6564bfea&is=65524aea&hm=216a9557f15a87dff50432c6b79ee7a1267ef92c73ecd29dc77af0bb14fa0479&){: .mx-auto.d-block :}
 
@@ -35,7 +35,8 @@ La capture fait 7491 trames, principalement des trames DNS. Une première intuit
 ![Analyse](https://i.pinimg.com/736x/90/36/85/9036856e213e3f2e8161ae9bfaa24bfd.jpg){: .mx-auto.d-block :}
 
  ## Analyse du malware
- Intéressons-nous tout d'abord à la première partie du code.
+
+Intéressons-nous tout d'abord à la première partie du code.
  ```python
 files = os.listdir('.')
 for f in files:
@@ -72,6 +73,8 @@ blackraven@blackraven:~$ strings capture.pcapng > data.txt
 ```
 
 Le créateur de ce challenge et moi étions cependant sur la même longueur d'onde quant à cette méthode.
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dUtPtIMIG0I/0.jpg)](https://www.youtube.com/watch?v=dUtPtIMIG0I)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dUtPtIMIG0I?si=YWsOgrrIVEr9WfVv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 Donc bon, nous allons faire ça propre.
+
+
