@@ -9,7 +9,7 @@ Bonjour ! Voici mon write-up sur le challenge **Bureau Déverrouillé** à l'occ
 ce challenge, ribt, ainsi qu'à tous les organisateurs et créateurs de challenges, que j'ai pu embêter à de nombreuses reprises à l'occasion de ce CTF. Mais sur ce, passons au challenge !
 
 ## Premier coup d'oeil
-![Chall](https://github.com/0xBlackRaven/0xBlackRaven.github.io/blob/master/assets/img/challenge_description.png?raw=true){ width="495" height="491" style="display: block; margin: 0 auto" }
+![Chall](https://github.com/0xBlackRaven/0xBlackRaven.github.io/blob/master/assets/img/challenge_description.png?raw=true){: .mx-auto.d-block :}
 
 La description du challenge ne nous renseigne pas plus que ça sur ce qui aurait pu se passer, mais on peut supposer que des données ont été exfiltrées. Et que tout ça a été enregistré par une capture réseau.
 Ca tombe bien, on est justement dans la catégorie réseau !
