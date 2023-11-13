@@ -34,8 +34,9 @@ La capture fait 7491 trames, principalement des trames DNS. Une première intuit
  
 ![Analyse](https://i.pinimg.com/736x/90/36/85/9036856e213e3f2e8161ae9bfaa24bfd.jpg){: .mx-auto.d-block :}
 
- ## Analyse du malware  
+ ## Analyse du malware
 
+ 
 Intéressons-nous tout d'abord à la première partie du code.
  ```python
 files = os.listdir('.')
