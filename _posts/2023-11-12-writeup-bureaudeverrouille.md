@@ -175,5 +175,5 @@ Et ça marche ! On a le flag !
 `NBCTF{Basic_DNS_3xfiltration}`
 
 ## Conclusion
-J'ai vraiment apprécié ce challenge, qui m'a permis de mettre en application mes connaissances en réseau afin de pouvoir le résoudre. J'ai aussi appris que rien ne valait la méthodologie, son manque m'a en effet perdre du temps là où j'aurais tout simplement pu finir plus tôt. Mais j'ai vraiment aimé, alors félicitations à ribt pour ce challenge ! Hâte d'aller en finale pour voir ce que les organisateurs nous ont concocté. Sur ce, flaggez bien !
+J'ai vraiment apprécié ce challenge, qui m'a permis de mettre en application mes connaissances en réseau afin de pouvoir le résoudre. J'ai aussi appris que rien ne valait la méthodologie, son manque m'a en effet fait perdre du temps là où j'aurais tout simplement pu finir plus tôt. Mais j'ai vraiment aimé, alors félicitations à ribt pour ce challenge ! Hâte d'aller en finale pour voir ce que les organisateurs nous ont concocté. Sur ce, flaggez bien !
 ![End](https://cdn.discordapp.com/attachments/822188888297963560/1173714572549554176/85woxn.jpg?ex=6564f5e0&is=655280e0&hm=1673386e8cb22420a1baa695451c121882c045423609d6b92df4b4362b8d0fc9&){: .mx-auto.d-block :}
