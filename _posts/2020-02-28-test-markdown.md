@@ -122,7 +122,7 @@ print(decoded_data)
 ```
 
 {: .box-note}
-**Note:** Important : Comment ai-je su que c'était un .jpg ? J'ai juste décodé le premier chunk. J'ai ainsi pu voir les magic bytes caractéristiques des jpeg : `ffd8 ffe0 0010 4a46 4946 0001`
+**Note:** Comment ai-je su que c'était un .jpg ? J'ai juste décodé le premier chunk. J'ai ainsi pu voir les magic bytes caractéristiques des jpeg : `ffd8 ffe0 0010 4a46 4946 0001`
 
 Après je fais un :
 ```console
