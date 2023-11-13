@@ -72,8 +72,9 @@ Tout d'abord, j'avais authentiquement la flemme de manipuler le fichier pour ré
 blackraven@blackraven:~$ strings capture.pcapng > data.txt
 ```
 
-Le créateur de ce challenge et moi étions cependant sur la même longueur d'onde quant à cette méthode.
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dUtPtIMIG0I?si=YWsOgrrIVEr9WfVv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+Le créateur de ce challenge et moi étions cependant sur la même longueur d'onde quant à cette méthode.  
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dUtPtIMIG0I?si=YWsOgrrIVEr9WfVv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  
 
 Donc bon, nous allons faire ça propre.
 
