@@ -87,6 +87,17 @@ with open("data_exfiltred.txt", 'rb') as flag:
     data = flag.read().split(b"\n")
 ```
 
-Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Et bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf que y'a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie.
+Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Et bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf que y'a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie pour tester les regex.
+![Oskour](https://cdn.discordapp.com/attachments/822188888297963560/1173701549474717796/85wglo.jpg?ex=6564e9bf&is=655274bf&hm=8a32193bae193d19c575ee9a7892a8435e380977c24913426b9b297eeb6659bb&){: .mx-auto.d-block :}
+Une fois cette difficulté passée, le filtre devient assez simple à coder.
+```python
+    flag = []
+    regex = re.compile(b"^\d+[?].+$")
+    for elem in data:
+        if regex.match(elem):
+            flag.append(elem)
+```
+
+Après, nous enlevons les doublons dans le texte, grâce à mes supers talents en programmation, se résumant en un mot : StackOverflow.
 
 
