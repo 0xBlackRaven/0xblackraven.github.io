@@ -62,4 +62,16 @@ for i in range(len(queries)):
         pass
 ```
 
-Ici, on se reprend une petite liste par compréhension, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`.
+Ici, on se reprend une petite liste par compréhension, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ca ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Etrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour trouver l'adresse IP. Mais c'est juste un moyen pour récupérer les données et les envoyer vers le serveur. Sûrement à des fins purement éducatives. Hum hum.
+Mais nous avons fini l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
+
+## Scripting
+Tout d'abord, j'avais authentiquement la flemme de manipuler le fichier pour récupérer toutes les trames DNS. C'est alors que j'ai fait un :
+```console
+blackraven@blackraven:~$ strings capture.pcapng > data.txt
+```
+
+Le créateur de ce challenge et moi étions cependant sur la même longueur d'onde quant à cette méthode.
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/dUtPtIMIG0I/0.jpg)](https://www.youtube.com/watch?v=dUtPtIMIG0I)
+
+Donc bon, nous allons faire ça propre.
