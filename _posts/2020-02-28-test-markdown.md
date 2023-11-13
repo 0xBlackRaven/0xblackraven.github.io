@@ -25,7 +25,7 @@ La capture fait 7491 trames, principalement des trames DNS. Une première intuit
 
  ![Pas_discret2](https://media.tenor.com/gVHHuzDLos8AAAAC/tiens-tiens-tiens-booba.gif){: .mx-auto.d-block :}
 
- Nous faisons donc un clic droit -> Suivre -> Flux TCP
+ Nous faisons donc un `clic droit -> Suivre -> Flux TCP`
  Et nous avons notre malware en clair !
  
  ![Malware](https://cdn.discordapp.com/attachments/822188888297963560/1173657711565607042/Capture_decran_25.png?ex=6564c0eb&is=65524beb&hm=0ba9ba2479432ef2ac7aabae2f81f4cc5bbab369a3fe7b48c3bc2e55e23e7af7&){: .mx-auto.d-block :}
@@ -78,5 +78,15 @@ Le créateur de ce challenge et moi étions cependant sur la même longueur d'on
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dUtPtIMIG0I?si=YWsOgrrIVEr9WfVv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  
 
 Donc bon, nous allons faire ça propre.
+Je suis donc retourné dans Wireshark, puis je suis allé dans `Fichier -> Exporter analyse des paquets -> Texte brut`. 
+
+Nous voilà maintenant avec un fichier `data_exfiltred.txt`
+Nous allons tout d'abord spliter le fichier à chaque saut de ligne.
+```python
+with open("data_exfiltred.txt", 'rb') as flag:
+    data = flag.read().split(b"\n")
+```
+
+Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Et bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf que y'a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie.
 
 
