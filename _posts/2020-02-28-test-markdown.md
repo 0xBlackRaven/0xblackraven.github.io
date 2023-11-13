@@ -68,7 +68,7 @@ Ici, on se reprend une petite liste par compréhension, qui ajoute juste les mor
 Mais nous avons fini l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
 
 ## Scripting
-Tout d'abord, j'avais authentiquement la flemme de manipuler le fichier pour récupérer toutes les trames DNS. C'est alors que j'ai fait un :
+Par paresse, parce que je ne voulais de manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
 ```console
 blackraven@blackraven:~$ strings capture.pcapng > data.txt
 ```
@@ -80,7 +80,7 @@ Le créateur de ce challenge et moi étions cependant sur la même longueur d'on
 Donc bon, nous allons faire ça propre.
 Je suis donc retourné dans Wireshark, puis je suis allé dans `Fichier -> Exporter analyse des paquets -> Texte brut`. 
 
-Nous voilà maintenant avec un fichier `data_exfiltred.txt`
+Nous voilà maintenant avec un fichier `data_exfiltred.txt`.
 Nous allons tout d'abord spliter le fichier à chaque saut de ligne.
 ```python
 with open("data_exfiltred.txt", 'rb') as flag:
@@ -91,13 +91,88 @@ Nous cherchons maintenant les données commençant par un nombre, suivi d'un poi
 ![Oskour](https://cdn.discordapp.com/attachments/822188888297963560/1173701549474717796/85wglo.jpg?ex=6564e9bf&is=655274bf&hm=8a32193bae193d19c575ee9a7892a8435e380977c24913426b9b297eeb6659bb&){: .mx-auto.d-block :}
 Une fois cette difficulté passée, le filtre devient assez simple à coder.
 ```python
-    flag = []
+    flag_encoded = []
     regex = re.compile(b"^\d+[?].+$")
     for elem in data:
         if regex.match(elem):
-            flag.append(elem)
+            flag_encoded.append(elem)
 ```
 
 Après, nous enlevons les doublons dans le texte, grâce à mes supers talents en programmation, se résumant en un mot : StackOverflow.
+```python
+filtered = []
+[filtered.append(x) for x in flag if x not in filtered]
+```
+Et hop, nous voilà maintenant avec une liste débarrassée de toute répétition ! Mais maintenant, comment faire pour se débarrasser des données parasites qui entourent nos précieux bouts de flag ? J'ai opté personnellement pour l'itération jusqu'à ce qu'on trouve un `?`, méthode simple mais qui marche.
+```python
+flag_encoded = b""
+for i in range(len(filtered)):
+    for j in range(len(filtered[i])):
+        if chr(filtered[i][j]) == '?':
+            flag_encoded += filtered[i][j+1:]
+            break
+```
+
+Maintenant, plus qu'une étape... On décode le flag, et on le met dans un fichier ! Je vous épargne les détails inutiles.
+```python
+flag = flag_encoded.replace(b'?', b"")
+flag += b"=" * (4 - len(flag_encoded) % 4)
+decoded_data = base64.urlsafe_b64decode(flag)
+print(decoded_data)
+```
+{: .box-note}
+**Note:** Important : Comment ai-je su que c'était un .jpg ? J'ai juste décodé le premier chunk. J'ai ainsi pu voir les magic bytes caractéristiques des jpeg : ffd8 ffe0 0010 4a46 4946 0001
+
+Après je fais un :
+```console
+blackraven@blackraven:~$ python3 solve.py > image.txt
+
+blackraven@blackraven:~$ echo -ne {cat image.txt} > image.jpg
+```
+Et... Ca ne marche pas. Tout simplement parce que c'est pas aussi simple.
+![Flemme](https://cdn.discordapp.com/attachments/822188888297963560/1173713252027473930/85wo60.jpg?ex=6564f4a5&is=65527fa5&hm=30f27849e7d037633651e14a2847427c1b06a9b2b93066b827bcb649d764de79&){: .mx-auto.d-block :}
+Donc je prends le temps de faire proprement...
+```python
+with open("image2.jpg", 'wb') as image:
+        image.write(decoded_data)
+```
+
+Ce qui nous donne le script suivant :
+```python
+import base64
+import re
 
 
+with open("data_exfiltred.txt", 'rb') as flag:
+    data = flag.read().split(b"\n")
+    flag_encoded = []
+    regex = re.compile(b"^\d+[?].+$")
+    for elem in data:
+        if regex.match(elem):
+            flag_encoded.append(elem)
+    filtered = []
+    [filtered.append(x) for x in flag if x not in filtered]
+    flag_encoded = b""
+    for i in range(len(filtered)):
+        for j in range(len(filtered[i])):
+            if chr(filtered[i][j]) == '?':
+                flag_encoded += filtered[i][j+1:]
+                break
+    flag = flag_encoded.replace(b'?', b"")
+    flag += b"=" * (4 - len(flag_encoded) % 4)
+    decoded_data = base64.urlsafe_b64decode(flag)
+    with open("image2.jpg", 'wb') as image:
+        image.write(decoded_data)
+```
+On run :
+```console
+blackraven@blackraven:~$ python3 solve.py
+```
+Et là, on ouvre l'image...
+![Flag](https://cdn.discordapp.com/attachments/822188888297963560/1173713839657857094/image.jpg?ex=6564f531&is=65528031&hm=c557643c471218b518a4fd97d5ca2269d69476b2e06a0fb9cfcf9e2558c0774a&){: .mx-auto.d-block :}
+Et ça marche ! On a le flag !
+`NBCTF{Basic_DNS_3xfiltration}`
+
+## Conclusion
+J'ai vraiment apprécié ce challenge, qui m'a permis de mettre en application mes connaissances en réseau afin de pouvoir le résoudre. J'ai aussi appris que rien ne valait la méthodologie, son manque m'a en effet perdre du temps là où j'aurais tout simplement pu finir plus tôt. Mais j'ai vraiment aimé, alors félicitations à ribt pour ce challenge ! Hâte d'aller en finale pour voir ce que les organisateurs nous ont concocté. Sur ce, flaggez bien !
+![End](https://cdn.discordapp.com/attachments/822188888297963560/1173714572549554176/85woxn.jpg?ex=6564f5e0&is=655280e0&hm=1673386e8cb22420a1baa695451c121882c045423609d6b92df4b4362b8d0fc9&){: .mx-auto.d-block :}
