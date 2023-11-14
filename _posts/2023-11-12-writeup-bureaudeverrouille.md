@@ -68,7 +68,7 @@ Ici, on se reprend une petite liste par compréhension nommée `queries`, qui aj
 Nous en avons (enfin) fini avec l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
 
 ## Scripting
-Par paresse, et aussi parce que je ne voulais de manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
+Par paresse, et aussi parce que je ne voulais manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
 ```console
 blackraven@blackraven:~$ strings capture.pcapng > data.txt
 ```
