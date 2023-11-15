@@ -5,8 +5,8 @@ subtitle: Write-Up pour le NBCTF
 tags: [writeup, reseau, prog]
 comments: true
 ---
-Bonjour ! Voici mon write-up sur le challenge **Bureau Déverrouillé** à l'occasion du NoBracket CTF. J'ai eu l'opportunité de terminer 2ème avec l'équipe nndy. Tout d'abord, un grand merci au créateur de 
-ce challenge, ribt, ainsi qu'à tous les organisateurs et créateurs de challenges, que j'ai pu embêter à de nombreuses reprises à l'occasion de ce CTF. Mais sur ce, passons au challenge !
+Bonjour ! Voici mon write-up sur le challenge **Bureau Déverrouillé** à l'occasion du NoBracket CTF. J'ai eu l'opportunité de terminer 2e avec l'équipe `nndy`. Tout d'abord, un grand merci au créateur de 
+ce challenge, `ribt`, ainsi qu'à tous les organisateurs et créateurs de challenges, que j'ai pu embêter à de nombreuses reprises à l'occasion de ce CTF. Mais sur ce, passons au challenge !
 
 ## Premier coup d'oeil
 ![Chall](https://github.com/0xBlackRaven/0xBlackRaven.github.io/blob/master/assets/img/challenge_description.png?raw=true){: .mx-auto.d-block :}
@@ -19,7 +19,7 @@ On télécharge le fichier fourni, sobrement intitulé **capture.pcapng**, on ga
 
 Et hop, on a notre fichier tout propre tout beau, que Wireshark peut lire.
 On ouvre donc le fichier, et puis là... On est assez surpris par la longueur du fichier.
-La capture fait 7491 trames, principalement des trames DNS. Une première intuition me fait dire que la plus grosse partie du challenge se déroulera là. Ensuite, nous avons au début quelque chose que j'interprète comme l'initialisation de quelque chose. Et là, détail me saute aux yeux : un GET de /malware.py, provenant du site `ribt.fr` sur le port `8000`.
+La capture fait 7491 trames, principalement des trames DNS. Une première intuition me fait dire que la plus grosse partie du challenge se déroulera là. Ensuite, nous avons au début quelque chose que j'interprète comme l'initialisation de quelque chose. Et là, un détail me saute aux yeux : un GET de /malware.py, provenant du site `ribt.fr` sur le port `8000`.
 
  ![Pas_discret](https://cdn.discordapp.com/attachments/822188888297963560/1173656521385705573/Capture_decran_24.png?ex=6564bfd0&is=65524ad0&hm=45274245d1a8992fc45430afab53f765d6d829bd0151cd1ae27d600e1b3b9a4b&){: .mx-auto.d-block :}
 
@@ -45,7 +45,7 @@ for f in files:
         with open(f, 'rb') as flag:
             data = flag.read()
 ```
-La première ligne recherche tous les fichiers situés dans le répertoire où l'utilisateur est situé, puis itère dessus dans une boucle for. Si le fichier a pour nom "flag", la condition est remplie, donc le programme ouvre l'image en mode lecture, puis stocke les données de flag dans data. Jusque là, rien de sorcier. La partie suivante sera un peu plus intéressante pour nous.
+La première ligne recherche tous les fichiers situés dans le répertoire où l'utilisateur est situé, puis itère dessus dans une boucle for. Si le fichier a pour nom "flag", la condition est remplie, donc le programme ouvre l'image en mode lecture, puis stocke les données de `flag` dans data. Jusque là, rien de sorcier. La partie suivante sera un peu plus intéressante pour nous.
 
  ```python
 encoded = base64.urlsafe_b64encode(data).decode().rstrip("=")
@@ -64,7 +64,7 @@ for i in range(len(queries)):
         pass
 ```
 
-Ici, on se reprend une petite liste par compréhension nommée `queries`, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ca ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Etrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour trouver l'adresse IP. Mais c'est juste un moyen de récupérer les données et de les envoyer vers le serveur pour recevoir les datas exfiltrées. Sûrement à des fins purement éducatives... Hum hum.
+Ici, on se reprend une petite liste par compréhension nommée `queries`, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ca ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Etrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour retrouver l'adresse IP de ce domaine. Mais c'est juste un moyen de récupérer les données et de les envoyer vers le serveur pour recevoir les datas exfiltrées. Sûrement à des fins purement éducatives... Hum hum.
 Nous en avons (enfin) fini avec l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
 
 ## Scripting
@@ -175,5 +175,5 @@ Et ça marche ! On a le flag !
 `NBCTF{Basic_DNS_3xfiltration}`
 
 ## Conclusion
-J'ai vraiment apprécié ce challenge, qui m'a permis de mettre en application mes connaissances en réseau afin de pouvoir le résoudre. J'ai aussi appris que rien ne valait la méthodologie, son manque m'a en effet fait perdre du temps là où j'aurais tout simplement pu finir plus tôt. Mais j'ai vraiment aimé, alors félicitations à ribt pour ce challenge ! Hâte d'aller en finale pour voir ce que les organisateurs nous ont concocté. Sur ce, flaggez bien !
+J'ai vraiment apprécié ce challenge, qui m'a permis de mettre en application mes connaissances en réseau afin de pouvoir le résoudre. J'ai aussi appris que rien ne valait la méthodologie, son manque m'a en effet fait perdre du temps là où j'aurais tout simplement pu finir plus tôt. Mais j'ai vraiment aimé, alors félicitations à `ribt` pour ce challenge ! Hâte d'aller en finale pour voir ce que les organisateurs nous ont concocté. Sur ce, flaggez bien !
 ![End](https://cdn.discordapp.com/attachments/822188888297963560/1173714572549554176/85woxn.jpg?ex=6564f5e0&is=655280e0&hm=1673386e8cb22420a1baa695451c121882c045423609d6b92df4b4362b8d0fc9&){: .mx-auto.d-block :}
