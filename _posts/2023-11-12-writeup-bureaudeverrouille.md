@@ -52,7 +52,7 @@ encoded = base64.urlsafe_b64encode(data).decode().rstrip("=")
 chunks = [encoded[i:i+63] for i in range(0, len(encoded), 63)]
 ```
 
-Ce morceau de code, qui paraît barbare, est en fait assez simple à comprendre. Nos données, précédemment stockées dans data, sont encodées en base64 (qui je le rappelle n'est pas un mécanisme de chiffrement, pour éviter de vous faire taper par des gourous de crypto).
+Ce morceau de code, qui paraît barbare, est en fait assez simple à comprendre. Nos données, précédemment stockées dans data, sont encodées en base64 (qui, je le rappelle, n'est pas un mécanisme de chiffrement, pour éviter de vous faire taper par des gourous de crypto).
 Après, les données encodées sont séparées en morceaux de 63 caractères dans la liste par compréhension `chunks`. En gros, cela découpe les données encodées en base64 en morceaux de taille similaire. C'est tout pour cette partie, on passe à la suivante.
 
 ```python
@@ -68,7 +68,7 @@ Ici, on se reprend une petite liste par compréhension nommée `queries`, qui aj
 Nous en avons (enfin) fini avec l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
 
 ## Scripting
-Par paresse, et aussi parce que je ne voulais manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
+Par paresse, et aussi parce que je ne voulais pas manipuler le fichier pour récupérer toutes les trames DNS, j'ai fait un :
 ```console
 blackraven@blackraven:~$ strings capture.pcapng > data.txt
 ```
@@ -87,7 +87,7 @@ with open("data_exfiltred.txt", 'rb') as flag:
     data = flag.read().split(b"\n")
 ```
 
-Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Et bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf que qu'il y a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie pour tester les regex (et StackOverflow aussi, pour rendre à César ce qui est à César).
+Nous cherchons maintenant les données commençant par un nombre, suivi d'un point, lui-même suivi de texte. Mais comment faire ? Eh bien avec des regex ! Les regex sauvent la vie, et sont très utiles dans pas mal de situations. Y compris celle-ci. Sauf qu'il y a théorie et pratique. En pratique, j'avais complétement oublié comment ça marchait. Alors le site [regex101](https://regex101.com) m'a bien sauvé la vie pour tester les regex (et StackOverflow aussi, pour rendre à César ce qui est à César).
 ![Oskour](https://cdn.discordapp.com/attachments/822188888297963560/1173701549474717796/85wglo.jpg?ex=6564e9bf&is=655274bf&hm=8a32193bae193d19c575ee9a7892a8435e380977c24913426b9b297eeb6659bb&){: .mx-auto.d-block :}
 Une fois cette difficulté passée, le filtre devient assez simple à coder.
 ```python
@@ -98,7 +98,7 @@ Une fois cette difficulté passée, le filtre devient assez simple à coder.
             flag_encoded.append(elem)
 ```
 
-Après, nous enlevons les doublons dans le texte, grâce à mes supers talents en programmation, se résumant en un mot : StackOverflow.
+Après, nous enlevons les doublons dans le texte, grâce à mes super talents en programmation, se résumant en un mot : StackOverflow.
 ```python
 filtered = []
 [filtered.append(x) for x in flag if x not in filtered]
