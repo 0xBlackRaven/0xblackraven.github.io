@@ -12,7 +12,7 @@ ce challenge, `ribt`, ainsi qu'à tous les organisateurs et créateurs de challe
 ![Chall](https://github.com/0xBlackRaven/0xBlackRaven.github.io/blob/master/assets/img/challenge_description.png?raw=true){: .mx-auto.d-block :}
 
 La description du challenge ne nous renseigne pas plus que ça sur ce qui aurait pu se passer, mais on peut supposer que des données ont été exfiltrées. Et que tout ça a été enregistré par une capture réseau.
-Ca tombe bien, on est justement dans la catégorie réseau !
+Ça tombe bien, on est justement dans la catégorie réseau !
 On télécharge le fichier fourni, sobrement intitulé **capture.pcapng**, on garde en pcapng parce que c'est next-gen et que notre wireshark peut le lire sans problème.
 
 ![Wireshark_le_goat](https://cdn.discordapp.com/attachments/822188888297963560/1173656631586865243/85vnqb.jpg?ex=6564bfea&is=65524aea&hm=216a9557f15a87dff50432c6b79ee7a1267ef92c73ecd29dc77af0bb14fa0479&){: .mx-auto.d-block :}
@@ -52,7 +52,7 @@ encoded = base64.urlsafe_b64encode(data).decode().rstrip("=")
 chunks = [encoded[i:i+63] for i in range(0, len(encoded), 63)]
 ```
 
-Ce morceau de code, qui paraît barbare, est en fait assez simple à comprendre. Nos données, précédemment stockées dans data, sont encodées en base64 (qui, je le rappelle, n'est pas un mécanisme de chiffrement, pour éviter de vous faire taper par des gourous de crypto).
+Ce morceau de code, qui paraît barbare, est en fait assez simple à comprendre. Nos données, précédemment stockées dans `data`, sont encodées en base64 (qui, je le rappelle, n'est pas un mécanisme de chiffrement, pour éviter de vous faire taper par des gourous de crypto).
 Après, les données encodées sont séparées en morceaux de 63 caractères dans la liste par compréhension `chunks`. En gros, cela découpe les données encodées en base64 en morceaux de taille similaire. C'est tout pour cette partie, on passe à la suivante.
 
 ```python
@@ -64,7 +64,7 @@ for i in range(len(queries)):
         pass
 ```
 
-Ici, on se reprend une petite liste par compréhension nommée `queries`, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ca ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Etrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour retrouver l'adresse IP de ce domaine. Mais c'est juste un moyen de récupérer les données et de les envoyer vers le serveur pour recevoir les datas exfiltrées. Sûrement à des fins purement éducatives... Hum hum.
+Ici, on se reprend une petite liste par compréhension nommée `queries`, qui ajoute juste les morceaux qui avaient été faits avant à `.exfil.ribt.fr`. Tiens... Ça ressemble étrangement à ce qu'on a pu voir dans les requêtes DNS... Étrange. Notre intuition est par la suite confirmée. En gros, le programme tente de résoudre le nom de domaine `{indice de l'itération}.{data encodée en base64}.exfil.ribt.fr` pour retrouver l'adresse IP de ce domaine. Mais c'est juste un moyen de récupérer les données et de les envoyer vers le serveur pour recevoir les datas exfiltrées. Sûrement à des fins purement éducatives... Hum hum.
 Nous en avons (enfin) fini avec l'analyse de notre malware. Maintenant, passons à la phase que je préfère (c'est faux) : le scripting. En utilisant bien sûr le langage aimé de tous, le bien nommé python.
 
 ## Scripting
@@ -130,7 +130,7 @@ blackraven@blackraven:~$ python3 solve.py > image.txt
 
 blackraven@blackraven:~$ echo -ne {cat image.txt} > image.jpg
 ```
-Et... Ca ne marche pas. Tout simplement parce que c'est pas aussi simple.
+Et... Ça ne marche pas. Tout simplement parce que c'est pas aussi simple.
 ![Flemme](https://cdn.discordapp.com/attachments/822188888297963560/1173713252027473930/85wo60.jpg?ex=6564f4a5&is=65527fa5&hm=30f27849e7d037633651e14a2847427c1b06a9b2b93066b827bcb649d764de79&){: .mx-auto.d-block :}
 Donc je prends le temps de faire proprement...
 ```python
