@@ -2,7 +2,7 @@
 layout: post
 title: Bureau Déverrouillé
 subtitle: Write-Up pour le NBCTF
-tags: [writeup, reseau, prog]
+tags: [writeup, reseau, prog, nbctf]
 comments: true
 ---
 Bonjour ! Voici mon write-up sur le challenge **Bureau Déverrouillé** à l'occasion du NoBracket CTF. J'ai eu l'opportunité de terminer 2e avec l'équipe `nndy`. Tout d'abord, un grand merci au créateur de 
