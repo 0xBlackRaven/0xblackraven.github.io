@@ -37,7 +37,8 @@ On lance donc Audacity, puis on va dans `Fichier -> Ouvrir...` puis on choisit n
 Ça ne marche pas... Eh bien, c'est parce que notre fichier est un fichier signal brut ! C'est par ailleurs ce que nous dit Audacity, qui pour le coup ne peut pas être plus clair sur ce qu'il faut faire.
 
 On va donc dans `Fichier -> Importer -> Données brutes`, on sélectionne notre fichier. On clique ensuite sur `Détecter`, ce qui nous évite de faire des réglages sur l'encodage. Dernier réglage : on change la fréquence d'échantillonage vers `132300 Hz`. Et puis on est bon !
-On importe... Et on run. Nous avons du morse ! On essaie donc de regarder via différents sites de décodage de morse.
+On importe... Et on run. Nous avons du morse ! Je regarde tout d'abord comme je peux faire pour solve le challenge en python. Et c'est honnêtement l'enfer. J'essaie de nombreuses librairies, sans résultat convaincant. Je me résous donc à utiliser des outils en ligne, car le temps presse. Les équipes nous talonnent, et il n'y a pas de temps à perdre dans un script qui de toute façon ne marchera sans doute pas, ou tout du moins après la guerre (Vous avez le jeu de mots ? Parce que le thème de ce NBCTF est la Première Guerre mondiale... Enfin bref).
+On essaie donc de regarder via différents sites de décodage de morse. Parce qu'il est aussi hors de question que je décode tout à la main. Un greffe de mains, ça coûte cher et c'est pas pratique, c'est pour ça que je privilégie la solution des décodeurs présents sur Internet.
 ![meme2](https://cdn.discordapp.com/attachments/822188888297963560/1175113834877427732/86e8wf.jpg?ex=656a0d0a&is=6557980a&hm=4334dea6946625cbd8b221d7b4d20923af214fd8de14497f47c54461fb48b3d2&){: .mx-auto.d-block :}
 
 ## Flag
