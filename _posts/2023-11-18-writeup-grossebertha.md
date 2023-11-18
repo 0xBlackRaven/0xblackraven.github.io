@@ -8,7 +8,7 @@ comments: true
 Bonjour ! Voici mon write-up sur le challenge **La grosse Bertha** à l'occasion du NoBracket CTF. Il s'agit de mon troisième write-up, alors n'hésitez pas à aller voir les autres après avoir lu celui-là !
 Je ne suis d'ordinaire pas très fan de pwn, mais j'ai apprécié faire ce challenge, qui m'a remis les basiques de l'exploitation de binaire en tête. Merci donc à `MaitreChiffon` pour cela. Mais sur ce, passons au write-up !
 
-## Premier coup d'oeil
+## Premier coup d'œil
 ![Challenge](https://cdn.discordapp.com/attachments/822188888297963560/1175380527801454694/Capture_decran_34.png?ex=656b056b&is=6558906b&hm=7d97a060ac7f251fb39adc2b4cdca9cbd8389c70ad9209ee41ca16cd92c5bbb0&){: .mx-auto.d-block :}
 
 Ce challenge dispose de deux fichiers, un binaire ainsi que le code source, écrit en C, de ce binaire. Enfin, une adresse en remote est fournie avec ce challenge, pour pouvoir réaliser le challenge à distance et ainsi avoir le flag. Mais regardons le code source fourni avant de nous atteler à l'exploitation.
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 ```
 
 Nous avons 4 fonctions, intitulées `shell`, `foo`, `init` et `main`. La fonction `init` ne nous intéressera pas ici. Mais nous remarquons quelque chose. Une fonction n'est jamais appelée dans le programme, et il s'agit de la fonction `shell`, qui nous permet de faire spawn un shell ! Et donc sûrement de récupérer le flag ! Nous sommes donc sur ce qu'on appelle un ret2win, c'est-à-dire que nous allons chercher à exploiter ce programme pour appeler cette fonction. Mais regardons où se situe cette vulnérabilité.
-Nous pourrions tout d'abord penser qu'elle se situe dans `main`, mais aucune fonction non-sécurisée n'est appelée. En effet, ici, `fgets` est la version sûre du traditionnel `gets`. Rien à faire donc ici, puisque `fgets` récupère uniquement 511 caractères de `stdin`. 
+Nous pourrions tout d'abord penser qu'elle se situe dans `main`, mais aucune fonction non sécurisée n'est appelée. En effet, ici, `fgets` est la version sûre du traditionnel `gets`. Rien à faire ici donc, puisque `fgets` récupère uniquement 511 caractères de `stdin`. 
 
 {: .box-note}
 **Note:** Et pourquoi pas 512 caractères ? Tout simplement parce que le dernier caractère est réservé au caractère nul (le fameux `\0` !)
@@ -73,7 +73,7 @@ Par la suite, la variable `input` sera passée en argument à la fonction `foo`.
 
 ![strcpy](https://cdn.discordapp.com/attachments/822188888297963560/1175385452811931648/86h1e0.jpg?ex=656b0a01&is=65589501&hm=6cd10817881fa0e1af5e06454f1dff5a885b08fa9e422cdd209bb6f0390ecca6&){: .mx-auto.d-block :}
 
-Et oui ! Le `strcpy` ici permet un buffer overflow. Mais comment cela se fait-il ? Eh bien, tout simplement, une variable `input` peut faire au maximum 512 caractères, et nous avons un `strcpy` dans la variable `buf`... Qui fait au maximum 64 caractères. Donc là, c'est l'overflow.
+Et oui ! Le `strcpy` ici permet un buffer overflow. Mais comment cela se fait-il ? Eh bien, tout simplement, la variable `input` peut faire au maximum 512 caractères, et nous avons un `strcpy` dans la variable `buf`... Qui fait au maximum 64 caractères. Donc là, c'est l'overflow.
 Nous pouvons vérifier ça assez simplement.
 ```console
 blackraven@blackraven:~$ python3 -c "print('A'*64)" | ./TheBigBertha
@@ -105,7 +105,7 @@ Un petit tour sur `gdb` (avec bien sûr `pwndbg` et pas `peda`) nous renseigne a
 On continue notre roadtrip sur `gdb` pour voir le padding nécessaire pour écraser le registre `EIP` avec la valeur de retour de notre adresse. Un outil très pratique, nommé `cyclic`, va nous permettre de faire cela.
 ![gdb](https://cdn.discordapp.com/attachments/822188888297963560/1175418096203341855/Capture_decran_35.png?ex=656b2868&is=6558b368&hm=e5eb5a6ad597aabf5c434c57efbcb28d1f1c768443daad8286283ef594e333e1&){: .mx-auto.d-block :}
 
-Comme vous pouvez le voir, cyclic indique ici un offset de 76. On teste donc avec cette offset en utilisant python2, et non pas python3 (ce dernier a tendance à faire n'importe quoi, ce qui fait que votre payload, même si il est juste, ne marchera pas).
+Comme vous pouvez le voir, cyclic indique ici un offset de 76. On teste donc avec cette offset en utilisant python2, et non pas python3 (ce dernier a tendance à faire n'importe quoi, ce qui fait que votre payload, même s'il est juste, ne marchera pas).
 ```console
 blackraven@blackraven:~$ python2 -c 'print "A"*76+ "\xf6\x91\x04\x08" ' | ./TheBigBertha
 Entrez la cible :                                                                                                                                                                                               Delta Charlie. Ordre bien reçu.                                                                                                                                                                                 La cible est : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                                                                                                                                                                                                                                                                                                                     Segmentation fault
@@ -134,4 +134,4 @@ Comme quoi, ça a du bon de crier "AAAAAA" sur La Grosse Bertha.
 
 ## Conclusion
 
-J'ai bien aimé ce challenge, que j'ai trouvé très sympa à faire étant donné que cela rappelle les basiques et la méthodo de l'exploitation de binaire. Un petit ret2win fort sympathique, qui ne présage que du bon pour les challenges de la finale !
+J'ai bien aimé ce challenge, que j'ai trouvé très sympa à faire étant donné que cela rappelle les basiques et la méthodo de l'exploitation de binaire. Un petit ret2win fort sympathique, qui ne présage que du bon pour les challenges de la finale ! ALLEZ, EN AVANT BERTHA !
