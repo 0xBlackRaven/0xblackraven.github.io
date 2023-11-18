@@ -134,4 +134,4 @@ Comme quoi, ça a du bon de crier "AAAAAA" sur La Grosse Bertha.
 
 ## Conclusion
 
-J'ai bien aimé ce challenge, que j'ai trouvé très sympa à faire étant donné que cela rappelle les basiques et la méthodo de l'exploitation de binaire. Un petit ret2win fort sympathique, qui ne présage que du bon pour la suite de la finale !
+J'ai bien aimé ce challenge, que j'ai trouvé très sympa à faire étant donné que cela rappelle les basiques et la méthodo de l'exploitation de binaire. Un petit ret2win fort sympathique, qui ne présage que du bon pour les challenges de la finale !
