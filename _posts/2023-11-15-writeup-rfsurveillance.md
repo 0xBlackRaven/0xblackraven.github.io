@@ -8,7 +8,7 @@ comments: true
 Bonjour ! Voici mon write-up pour le challenge `RF Surveillance` à l'occasion du NoBracket CTF. Il s'agit de mon deuxième write-up, alors n'hésitez pas à aller jeter un coup d'oeil au premier !
 Tout d'abord, je tenais à remercier `Endeavxor` pour son challenge qui m'a particulièrement plu. Mais sur ce, passons au write-up ! 
 
-## Premier coup d'oeil
+## Premier coup d'œil
 ![Chall](https://cdn.discordapp.com/attachments/822188888297963560/1175095822724108419/Capture_decran_28.png?ex=6569fc44&is=65578744&hm=495b544beb01cdd37c9cb371abca46257800538154b9117ad3df6f1d922e37d1&){: .mx-auto.d-block :}
 Ce challenge est accompagné de deux ressources. La configuration de l'émetteur sur GNU Radio, puis la configuration du récepteur.
 Regardons tout d'abord le flowgraph de l'émetteur :
@@ -16,7 +16,7 @@ Regardons tout d'abord le flowgraph de l'émetteur :
 ![emetteur](https://cdn.discordapp.com/attachments/822188888297963560/1175096364762419210/EMISSION_GNU_Radio.png?ex=6569fcc5&is=655787c5&hm=84cf46f5e25c3b6fab9ece1495dfd034c963865cde6b30cbb40824902a12b530&){: .mx-auto.d-block :}
 
 Nous avons pas mal de choses intéressantes ici. Nous voyons qu'un fichier intitulé `message_to_transmit.wav` est passé à travers un bloc `NBFM Transmit`. En gros, ce bloc produit une sortie en bande de base complexe modulée en FM. Encore un peu trop barbare. Pour faire simple, ça ![module](https://fr.wikipedia.org/wiki/Modulation_du_signal) juste le signal en FM. Les paramètres ne nous intéressent pas trop ici.
-Le bloc `Rational Resampler` ne nous intéresse pas non plus. Mais par contre, le `PlutoSDR Sink` nous intéresse fortement. Nous allons ici nous intéresser surtout au Sample Rate, qui nous servira plus tard.
+Le bloc `Rational Resampler` ne nous intéresse pas non plus. Mais par contre, le `PlutoSDR Sink` nous intéresse fortement. Nous allons ici nous focaliser surtout sur le Sample Rate, qui nous servira plus tard.
 Donc résumons : nous avons un signal modulé en FM, dont la fréquence d'échantillonage est égale à `132300 Hz`. Nous pourrions d’ores et déjà regarder sur Audacity, mais regardons le flowgraph du receveur, pour ne pas louper d'informations qui pourraient être cruciales.
 
 ![receveur](https://cdn.discordapp.com/attachments/822188888297963560/1175096365303468092/RECEPTION_GNU_Radio.png?ex=6569fcc5&is=655787c5&hm=5e3dabd33f11240002894450c68d9932d231978437f8f847087e76562bed5c26&){: .mx-auto.d-block :}
@@ -60,10 +60,10 @@ Puis, après ça, nous allons dans `Analyse -> Tracer le spectre` ce qui nous do
 
 On peut ainsi voir la fréquence haute ! Qui est ici égale à `2163 Hz` !
 
-On rentre donc notre nouvelle fréquence... Puis on laisse tourner l'audio. Le début semble déjà plus convaincant. Mais... C'est de l'allemand ! Parfait, étant mosellan, je vais enfin pouvoir exécuter l'ordre de mission ! Hum... Excusez-moi, je m'égare.
+On rentre donc notre nouvelle fréquence... Puis on laisse tourner l'audio. Le début semble déjà plus convaincant. Mais... C'est de l'allemand ! Parfait, étant Mosellan, je vais enfin pouvoir exécuter l'ordre de mission ! Hum... Excusez-moi, je m'égare.
 ![flag](https://cdn.discordapp.com/attachments/822188888297963560/1175129394096906341/Capture_decran_33.png?ex=656a1b88&is=6557a688&hm=8069b0bdf5db0ed38f97953bfa20008208d757e4c53a369e57990ad5e9294e28&){: .mx-auto.d-block :}
 
-Parfait, nous avons notre flag ! Un petit coup d'oeil au format demandé nous renseigne sur ce qu'est le flag : `NBCTF{VOUSAVEZDECODERAVECSUCCESGG}` !
+Parfait, nous avons notre flag ! Un petit coup d'œil au format demandé nous renseigne sur ce qu'est le flag : `NBCTF{VOUSAVEZDECODERAVECSUCCESGG}` !
 
 ## Conclusion
 
