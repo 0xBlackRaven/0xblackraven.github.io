@@ -15,7 +15,7 @@ Regardons tout d'abord le flowgraph de l'émetteur :
 
 ![emetteur](https://cdn.discordapp.com/attachments/822188888297963560/1175096364762419210/EMISSION_GNU_Radio.png?ex=6569fcc5&is=655787c5&hm=84cf46f5e25c3b6fab9ece1495dfd034c963865cde6b30cbb40824902a12b530&){: .mx-auto.d-block :}
 
-Nous avons pas mal de choses intéressantes ici. Nous voyons qu'un fichier intitulé `message_to_transmit.wav` est passé à travers un bloc `NBFM Transmit`. En gros, ce bloc produit une sortie en bande de base complexe modulée en FM. Encore un peu trop barbare. Pour faire simple, ça ![module](https://fr.wikipedia.org/wiki/Modulation_du_signal) juste le signal en FM. Les paramètres ne nous intéressent pas trop ici.
+Nous avons pas mal de choses intéressantes ici. Nous voyons qu'un fichier intitulé `message_to_transmit.wav` est passé à travers un bloc `NBFM Transmit`. En gros, ce bloc produit une sortie en bande de base complexe modulée en FM. Encore un peu trop barbare. Pour faire simple, ça [module](https://fr.wikipedia.org/wiki/Modulation_du_signal) juste le signal en FM. Les paramètres ne nous intéressent pas trop ici.
 Le bloc `Rational Resampler` ne nous intéresse pas non plus. Mais par contre, le `PlutoSDR Sink` nous intéresse fortement. Nous allons ici nous focaliser surtout sur le Sample Rate, qui nous servira plus tard.
 Donc résumons : nous avons un signal modulé en FM, dont la fréquence d'échantillonage est égale à `132300 Hz`. Nous pourrions d’ores et déjà regarder sur Audacity, mais regardons le flowgraph du receveur, pour ne pas louper d'informations qui pourraient être cruciales.
 
