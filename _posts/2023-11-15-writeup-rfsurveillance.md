@@ -45,7 +45,7 @@ On essaie donc de regarder via différents sites de décodage de morse parce qu'
 On exporte par la suite notre fichier pour le rendre dans un format lisible par les décodeurs en ligne. On va donc dans `Fichier -> Exporter l'audio...`, et nous voilà avec un `signal_saved.wav` tout neuf.
 
 ## Flag
-Nous allons sur notre ![site](https://morsecode.world/international/decoder/audio-decoder-adaptive.html), nous rentrons notre .wav précédemment exporté... Et puis ça ne veut rien dire. C'est du charabia incompréhensible. Nous avons donc une mauvaise méthode... Mais comment faire pour résoudre ça ? Qu'est-ce qui ne va pas ? 
+Nous allons sur notre [site](https://morsecode.world/international/decoder/audio-decoder-adaptive.html), nous rentrons notre .wav précédemment exporté... Et puis ça ne veut rien dire. C'est du charabia incompréhensible. Nous avons donc une mauvaise méthode... Mais comment faire pour résoudre ça ? Qu'est-ce qui ne va pas ? 
 Je constate que quand le fichier est lu, la valeur des fréquences oscillent sans discontinuer... C'est peut-être de là que vient le problème ! On va donc essayer de trouver cette fréquence.
 
 
